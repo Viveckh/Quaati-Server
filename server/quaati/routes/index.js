@@ -1,4 +1,5 @@
 import express from 'express';
+import dbConnection from './dbRequests';
 var router = express.Router();
 
 /* GET home page. */
