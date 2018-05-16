@@ -9,10 +9,11 @@ router.get('/', async function(req, res, next) {
   collection.find({}).toArray(function(err, docs) {
       console.log("Found the following records");
       // console.log(docs)
-      return docs;
+      //return docs;
+      return res.send(docs);
   });
 
-  res.render('index', { title: 'Express' });
+  //res.render('index', { title: 'Express' });
 });
 
 module.exports = router;
