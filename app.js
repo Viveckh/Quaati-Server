@@ -4,6 +4,9 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import babelCore from 'babel-core/register';
+import babelPolyfill from 'babel-polyfill';
+
 import database from './database/dbRequests'
 
 import indexRouter from './routes/index';
@@ -41,10 +44,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+/*
 app.listen(PORT, function () {
   console.log('Listening on port: ', PORT)
 }).on('error', function() {
   console.log("The port cannot be used. It might have already been in use by other app");
 })
+*/
 
 module.exports = app;
