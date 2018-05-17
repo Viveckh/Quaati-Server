@@ -44,12 +44,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-/*
-app.listen(PORT, function () {
-  console.log('Listening on port: ', PORT)
-}).on('error', function() {
-  console.log("The port cannot be used. It might have already been in use by other app");
-})
-*/
-
 module.exports = app;

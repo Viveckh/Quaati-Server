@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "rimraf build/ && babel ./ --out-dir build/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
-    "start": "npm run build && node build/bin/www",
+    "start": "npm install && npm run build && node ./build/bin/www",
     "devstart": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {
