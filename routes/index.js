@@ -15,7 +15,16 @@ router.get('/', async function(req, res, next) {
 router.get('/getBasicInfo/:auth_token', async function(req, res, next) {
   const collection = await dbConnection.db().collection('students_master');
   const query = { auth_token: req.params.auth_token };
-  const fieldsToReturn = { first_name: 1, last_name: 1 };
+  const fieldsToReturn = { 
+    first_name: 1,
+    middle_name: 1, 
+    last_name: 1,
+    majors: 1,
+    class_status: 1,
+    interests: 1,
+    last_login_timestamp: 1,
+    photos: 1
+  };
 
   //Find the profile information for the associated user
   collection.find(query).project(fieldsToReturn).toArray(function(err, docs) {
