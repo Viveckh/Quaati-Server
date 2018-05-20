@@ -51,7 +51,7 @@ router.post('/getMatches/:auth_token', async function(req, res, next){
   const newValues = { $push: { people_swiped: { $each : req.body.newly_swiped_users } } };
   
   //Add the last batch of users the current user swiped across to db
-  collection.findOneAndUpdate(query, newValues, {returnNewDocument: true}, function(err, docs) {
+  collection.findOneAndUpdate(query, newValues, {returnOriginal: false}, function(err, docs) {
     if (err) {
       console.error(err);
       return;
@@ -61,9 +61,7 @@ router.post('/getMatches/:auth_token', async function(req, res, next){
     if (docs.value != undefined) {
       auth_tokens_to_exclude = docs.value.people_swiped;
     }
-    console.log(docs);
     auth_tokens_to_exclude.push(req.params.auth_token);
-    console.log(auth_tokens_to_exclude);
 
     //Get the next batch of users for the user to swipe across, make sure they are new
     const queryToFindMatches = { auth_token: { $nin: auth_tokens_to_exclude } };
