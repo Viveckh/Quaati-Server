@@ -18,16 +18,15 @@ let getDB = async () => {
         try {
             console.log("URL", config.url)
             client = await MongoClient.connect(config.url, {useNewUrlParser: true});
-        }catch(err){
+        }
+        catch(err){
             console.log("ERROR IN DB: ", err);
         }
 
         console.log("Connected to DB successfully!");
-
         database = client.db(config.databaseName);
-
-        
-    }catch(err){
+    }
+    catch(err){
         console.log("Error connecting to SSH Tunnel")
     }
     return database;
