@@ -1,5 +1,10 @@
 import express from 'express';
 import dbConnection from './../database/dbRequests';
+
+import StudentDTO from './../database/dto/student.json';
+import MatchService from './../service/matchService';
+import UserService from './../service/userService';
+
 var router = express.Router();
 
 /* GET the entire data dump. */
@@ -8,6 +13,7 @@ router.get('/', async function(req, res, next) {
   // Find some documents
   collection.find({}).toArray(function(err, docs) {
       return res.send(docs);
+
   });
 });
 
@@ -15,19 +21,9 @@ router.get('/', async function(req, res, next) {
 router.get('/getBasicInfo/:auth_token', async function(req, res, next) {
   const collection = await dbConnection.db().collection('students_master');
   const query = { auth_token: req.params.auth_token };
-  const fieldsToReturn = { 
-    first_name: 1,
-    middle_name: 1, 
-    last_name: 1,
-    majors: 1,
-    class_status: 1,
-    interests: 1,
-    last_login_timestamp: 1,
-    photos: 1
-  };
 
   //Find the profile information for the associated user
-  collection.find(query).project(fieldsToReturn).toArray(function(err, docs) {
+  collection.find(query).project(StudentDTO).toArray(function(err, docs) {
     if (err) {
       console.error(err);
       return;
@@ -51,6 +47,26 @@ router.post('/updateBasicInfo/:auth_token', async function(req, res, next) {
     return res.send(result);
   });
 });
+
+router.get('/matches/:auth_token', async (req, res, next) => {
+  console.log("Index")
+  
+  if (!req.params.auth_token || req.params.auth_token.trim() == '') return res.status(400).send("User not provided.");
+  let userFound = null;
+  try {
+    userFound = await UserService.getUserByToken(req.params.auth_token);
+    if(!userFound || userFound.length < 1) throw new Error('Database Error');
+  }
+  catch(err){
+    return res.status(404).statusMessage(err);
+  }
+
+  let matchProfiles = MatchService.findMatchedProfiles(userFound[0])
+
+  // console.log("User Found", userFound)
+
+  return res.status(200);
+})
 
 /* POST request that updates who the users recently swiped across and gets the next set of matches */
 router.post('/getMatches/:auth_token', async function(req, res, next){
