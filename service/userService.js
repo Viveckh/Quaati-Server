@@ -15,6 +15,31 @@ export default {
             return err;
         }
         return res;
+    },
+
+    async getAllUsers() {
+        let res = null;
+        try {
+            res = await StudentCollection().find().toArray();
+        }catch(err){
+            console.error("Database error: ", err)
+            return err;
+        }
+
+        return res;
+    },
+
+    async getUsersByFilter(filterQuery){
+        if (!filterQuery) return null;
+
+        let res = null;
+        try {
+            res = await StudentCollection().find(filterQuery).toArray();
+        }catch(err){
+            console.log("Error with collection ", err)
+            return err;
+        }
+        return res;
     }
 }
 

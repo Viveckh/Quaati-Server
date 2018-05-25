@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rimraf build/ && babel ./ --out-dir build/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start": "npm install && npm run build && node ./build/bin/www",
+    "serve": "nodemon --exec babel-node ./bin/www",
     "devstart": "nodemon --exec babel-node ./bin/www"
   },
   "dependencies": {

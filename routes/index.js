@@ -49,7 +49,6 @@ router.post('/updateBasicInfo/:auth_token', async function(req, res, next) {
 });
 
 router.get('/matches/:auth_token', async (req, res, next) => {
-  console.log("Index")
   
   if (!req.params.auth_token || req.params.auth_token.trim() == '') return res.status(400).send("User not provided.");
   let userFound = null;
@@ -60,12 +59,15 @@ router.get('/matches/:auth_token', async (req, res, next) => {
   catch(err){
     return res.status(404).statusMessage(err);
   }
+  let matchProfiles;
 
-  let matchProfiles = MatchService.findMatchedProfiles(userFound[0])
+  try {
+    matchProfiles = await MatchService.findMatchedProfiles(userFound[0]);
+  }catch(err){
+    return res.status(500);
+  }
 
-  // console.log("User Found", userFound)
-
-  return res.status(200);
+  return res.send(matchProfiles);
 })
 
 /* POST request that updates who the users recently swiped across and gets the next set of matches */
