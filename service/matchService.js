@@ -4,7 +4,8 @@ export default {
     async findMatchedProfiles(user){
         let filterProps ={
             "class_status": user.class_status,
-            "auth_token": {$ne: user.auth_token}
+            "auth_token": {$ne: user.auth_token},
+            "gender": user.gender
         }
 
         let filteredUsers;
