@@ -1,5 +1,7 @@
 import UserService from './userService'
 import { db, StudentCollection } from './../database/dbRequests';
+import MatchResponseDTO from './../database/dto/matchResponse.json';
+import Algo from './algo.js'
 
 export default {
     async findMatchedProfiles(user) {
@@ -64,13 +66,15 @@ export default {
         let res;
         
         try {
-            res = await StudentCollection().find(filterProps).limit(requested_num_of_records).toArray();
+            res = await StudentCollection().find(filterProps).project(MatchResponseDTO).toArray();
             
         }catch(err){
             console.log("Error")
             return err;
         }
+
+        let newArr = Algo.computeScores(userFound, res);
             
-        return res;
+        return newArr.slice(0, requestedNumberOfRecords);
     }
 }
