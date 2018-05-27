@@ -5,7 +5,7 @@ export default {
     async getUserByToken(token){
         if (!token) return null;
 
-        let query = { auth_token: token };
+        let query = { auth_token: parseInt(token) };
 
         let res = null;
         try {
@@ -14,7 +14,7 @@ export default {
             console.log("Error with collection ", err)
             return err;
         }
-        return res;
+        return res.length >=1 ? res[0] : [];
     },
 
     async getAllUsers() {
