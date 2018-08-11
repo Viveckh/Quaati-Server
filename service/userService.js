@@ -1,6 +1,10 @@
 import { db, StudentCollection } from './../database/dbRequests';
-import DBCollections from './../properties/dbCollections.json'
 
+/** 
+ * This service class helps to get/set the user information in the database. 
+ * @author Sujil Maharjan
+ * 
+*/
 export default {
     async getUserByToken(token){
         if (!token) return null;

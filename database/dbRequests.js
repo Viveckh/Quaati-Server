@@ -5,12 +5,15 @@ import config from './../properties/db.js'
 import tunnel from 'tunnel-ssh'
 import DBCollections from './../properties/dbCollections.json'
 
-// const url = 'mongodb://localhost:27017/quaati-db-main';
-
 let db = null, server;
 let database; 
 let student_collection;
 
+/**
+ * Function that connects with the database and gets up the db connection for the application to use. It also 
+ * sets all the collections that exists in the backend. 
+ * @author Sujil Maharjan
+ */
 let getDB = async () => {
     
     try {

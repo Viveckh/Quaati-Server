@@ -1,9 +1,4 @@
 import express from 'express';
-import dbConnection from './../database/dbRequests';
-
-import StudentDTO from './../database/dto/student.json';
-import MatchService from './../service/matchService';
-import UserService from './../service/userService';
 
 import UserController from './../controllers/userController';
 import MatchController from './../controllers/matchController';
@@ -16,15 +11,19 @@ router.get('/', async function(req, res, next) {
   return res.send("API Works");
 });
 
+/** Route to handle 'users' api endpoint. */
 router.route('/users')
       .get(UserController.getAllUsers);
 
+/** Routes to handle post and get requests for given user. */
 router.route('/users/:auth_token')
       .get(UserController.getUserInfo)     
       .post(UserController.modifyUserInfo);
 
+/** Route that serves when the user only looks for filtered results and doesn't care about the score. */
 router.get('/users/:auth_token/filteredMatch', MatchController.getFilteredMatches);
 
+/** Route that serves when looking for new matches. Probably the most important link in the whole app. */
 router.post('/users/:auth_token/matches', MatchController.getNewMatches);
 
 

@@ -1,7 +1,20 @@
 import dbConnection from './../database/dbRequests';
 import StudentDTO from './../database/dto/student.json';
 
+/** 
+ * This controller handles all the user modification/get routes.
+ * @author Sujil Maharjan
+*/
 export default {
+  /**
+   * Gets the user's information given the user's token.
+   *
+   * @author Sujil Maharjan
+   * @param {*} req Holds the request.
+   * @param {*} res Holds the response.
+   * @param {*} next
+   * @returns the details of a user's information.
+   */
   async getUserInfo(req, res, next) {
     const collection = await dbConnection.db().collection('students_master');
     const query = {
@@ -18,6 +31,14 @@ export default {
     });
   },
 
+  /**
+   * Modifies the given user's information. 
+   *
+   * @author Sujil Maharjan
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   */
   async modifyUserInfo(req,res,next) {
     const collection = await dbConnection.db().collection('students_master');
     const query = { auth_token: parseInt(req.params.auth_token) };
