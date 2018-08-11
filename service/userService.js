@@ -34,7 +34,9 @@ export default {
 
         let res = null;
         try {
+            console.log("Getting users by filter...")
             res = await StudentCollection().find(filterQuery).toArray();
+            console.log("Found users...")
         }catch(err){
             console.log("Error with collection ", err)
             return err;

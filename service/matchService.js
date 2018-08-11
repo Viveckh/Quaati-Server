@@ -7,13 +7,15 @@ export default {
     async findMatchedProfiles(user) {
         let filterProps = {
             "class_status": user.class_status,
-            "auth_token": { $ne: user.auth_token },
+            "auth_token": { $ne: parseInt(user.auth_token) },
             "gender": user.gender
         }
 
         let filteredUsers;
         try {
+            console.log("Filtering users for ", user.first_name);
             filteredUsers = await UserService.getUsersByFilter(filterProps);
+            console.log("Filter done")
         } catch (err) {
             return err;
         }
@@ -54,8 +56,6 @@ export default {
 
         //Get the next batch of users for the user to swipe across, make sure they are new
         // const queryToFindMatches = { auth_token: { $nin: auth_tokens_to_exclude } };
-        const requested_num_of_records = Number(requestedNumberOfRecords);
-        const fieldsToReturn = { first_name: 1, last_name: 1 };
 
         let filterProps = {
             "class_status": userFound.class_status,
@@ -72,7 +72,6 @@ export default {
             console.log("Error")
             return err;
         }
-
         let newArr = Algo.computeScores(userFound, res);
             
         return newArr.slice(0, requestedNumberOfRecords);

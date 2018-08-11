@@ -6,5 +6,13 @@
     "class_status": 1,
     "interests": 1,
     "last_login_timestamp": 1,
-    "photos": 1
+    "photos": 1,
+    "organizations": 1,
+    "gender": 1,
+    "people_matched": 1,
+    "last_loging_timestamp":1,
+    "music_interests": 1,
+    "minors": 1,
+    "friends": 1,
+    "personality": 1
 }

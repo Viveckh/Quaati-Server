@@ -10,7 +10,6 @@ import babelPolyfill from 'babel-polyfill';
 import database from './database/dbRequests'
 
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
 
 var app = express();
 
@@ -24,8 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/v1/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
