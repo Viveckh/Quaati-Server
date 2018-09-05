@@ -2,6 +2,7 @@ import express from 'express';
 
 import UserController from './../controllers/userController';
 import MatchController from './../controllers/matchController';
+import DecisionController from './../controllers/decisionController';
 
 var router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/users/:auth_token/filteredMatch', MatchController.getFilteredMatche
 /** Route that serves when looking for new matches. Probably the most important link in the whole app. */
 router.post('/users/:auth_token/matches', MatchController.getNewMatches);
 
-
+router.post('/users/:auth_token/decision', DecisionController.handleLikeDislikeDecision)
 /**
  * ENDPOINTS FOR
  * Authenticate
